@@ -496,7 +496,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        emailjs.init("YOUR_PUBLIC_KEY");
+        emailjs.init("Nih9YHSx3PZxrwqaX");
 
         const roles = ["AI Engineer", "Data Engineer"];
         const typingEl = document.getElementById("typing-role");
@@ -549,7 +549,7 @@
         emailForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+            emailjs.send("service_a9sezfr", "template_8j8yfm7", {
                 from_name: document.getElementById('name').value,
                 from_email: document.getElementById('email').value,
                 message: document.getElementById('message').value
