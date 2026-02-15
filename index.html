@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neha Babhare | AI & Data Engineer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=DM+Serif+Display&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fdfdfd;
+            --accent: #0f172a;
+            --highlight: #c6a75e;
+            --muted: #6b7280;
+            --soft-gradient: linear-gradient(135deg, #fdfcfb 0%, #f8f6f1 40%, #f3efe6 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--soft-gradient);
+            color: var(--accent);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle Grain Texture */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.035;
+            background-image:
+                radial-gradient(rgba(0, 0, 0, 0.4) 1px, transparent 1px);
+            background-size: 3px 3px;
+        }
+
+        /* Ensure content sits above grain */
+        .section,
+        .navbar-custom,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar-custom {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+            display: flex;
+            gap: 26px;
+            z-index: 1000;
+        }
+
+        .navbar-custom a {
+            color: var(--muted);
+            font-size: 18px;
+            transition: .3s
+        }
+
+        .navbar-custom a:hover {
+            color: var(--accent);
+            transform: translateY(-3px)
+        }
+
+        .section {
+            padding: 140px 0
+        }
+
+        .hero.section {
+            padding: 0
+        }
+
+        .section h2 {
+            text-align: center;
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            font-size: clamp(44px, 5vw, 72px);
+            letter-spacing: -0.5px;
+            margin-bottom: 90px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .section.visible h2 {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .section h2 span {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--highlight);
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .section h2::after {
+            content: attr(data-bg);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(100px, 14vw, 220px);
+            font-weight: 900;
+            color: rgba(15, 23, 42, 0.035);
+            z-index: -1;
+            white-space: nowrap;
+            letter-spacing: 8px;
+        }
+
+        .section h2::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -22px;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+            opacity: .8;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 900
+        }
+
+        .hero .role {
+            color: var(--highlight)
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 25px auto 0;
+            color: var(--muted);
+            font-size: 18px
+        }
+
+        .cursor {
+            display: inline-block;
+            margin-left: 4px;
+            color: var(--highlight);
+            animation: blink 1s infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            50%,
+            100% {
+                opacity: 1
+            }
+
+            25%,
+            75% {
+                opacity: 0
+            }
+        }
+
+        .project-wrapper {
+            overflow: hidden
+        }
+
+        .project-scroll {
+            display: flex;
+            gap: 60px;
+            overflow-x: auto;
+            padding: 30px 60px;
+            scrollbar-width: none
+        }
+
+        .project-scroll::-webkit-scrollbar {
+            display: none
+        }
+
+        .project-card {
+            flex: 0 0 auto;
+            width: 380px;
+            height: 380px;
+            background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow:
+                0 10px 30px rgba(15, 23, 42, .06),
+                0 25px 80px rgba(15, 23, 42, .10);
+            transition: .4s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(15, 23, 42, .05);
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow:
+                0 25px 70px rgba(15, 23, 42, .14),
+                0 45px 130px rgba(15, 23, 42, .20);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--highlight), #e7d3a3);
+            color: white;
+            font-size: 24px;
+        }
+
+        .project-card h5 {
+            font-weight: 800;
+            font-size: 20px;
+            margin-top: 20px
+        }
+
+        .project-card p {
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px
+        }
+
+        .skill-item {
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, .05);
+            text-align: center;
+            transition: .3s ease;
+            border: 1px solid rgba(15, 23, 42, .05);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-8px) scale(1.02)
+        }
+
+        .skill-item i {
+            font-size: 28px;
+            color: var(--highlight);
+            margin-bottom: 12px
+        }
+
+        .skill-item h6 {
+            font-weight: 700;
+            margin: 0
+        }
+
+        .exp-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, .06);
+            border: 1px solid rgba(15, 23, 42, .05);
+        }
+
+        .exp-card span {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .coffee-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center
+        }
+
+        @media(max-width:992px) {
+            .coffee-split {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .coffee-form {
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            padding: 50px;
+            border-radius: 28px;
+            box-shadow: 0 30px 90px rgba(15, 23, 42, .10);
+            border: 1px solid rgba(15, 23, 42, .05);
+        }
+
+        .coffee-form input,
+        .coffee-form textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ddd;
+            border-radius: 14px
+        }
+
+        .coffee-btn {
+            background: linear-gradient(135deg, var(--highlight), #e7d3a3);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700
+        }
+
+        .success-msg {
+            margin-top: 15px;
+            color: green;
+            font-weight: 600;
+            display: none
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            color: var(--muted)
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar-custom">
+        <a href="#home"><i class="bi bi-house"></i></a>
+        <a href="#projects"><i class="bi bi-folder"></i></a>
+        <a href="#skills"><i class="bi bi-cpu"></i></a>
+        <a href="#experience"><i class="bi bi-briefcase"></i></a>
+        <a href="#coffee"><i class="bi bi-cup-hot"></i></a>
+    </div>
+
+    <section id="home" class="section hero">
+        <div class="container">
+            <h1>Hi, I'm Neha Babhare<br>
+                <span class="role" id="typing-role"></span><span class="cursor">|</span>
+            </h1>
+            <p>AI Engineer & Data Engineer building intelligent systems and scalable data platforms.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container-fluid">
+            <h2 data-bg="WORK"><span>Portfolio</span>Projects</h2>
+            <div class="project-wrapper">
+                <div class="project-scroll" id="projectScroll">
+                    <div class="project-card">
+                        <div>
+                            <div class="project-icon"><i class="bi bi-translate"></i></div>
+                            <h5>Multilingual AI System</h5>
+                            <p>Designed multilingual NLP pipeline with automatic language detection and optimized
+                                speech-to-text processing.</p>
+                            <ul style="padding-left:18px;color:var(--muted);font-size:14px;line-height:1.6;">
+                                <li>Python + NLP stack</li>
+                                <li>Improved processing speed</li>
+                                <li>Handled multilingual datasets</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div>
+                            <div class="project-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                            <h5>Public Sentiment Analysis</h5>
+                            <p>Built supervised ML models to classify and analyze large-scale public opinion data.</p>
+                            <ul style="padding-left:18px;color:var(--muted);font-size:14px;line-height:1.6;">
+                                <li>Accuracy optimization</li>
+                                <li>Feature engineering</li>
+                                <li>Pandas + Scikit-learn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div>
+                            <div class="project-icon"><i class="bi bi-cpu-fill"></i></div>
+                            <h5>Enterprise Text Analytics</h5>
+                            <p>Engineered AI-driven document intelligence system for enterprise workflows.</p>
+                            <ul style="padding-left:18px;color:var(--muted);font-size:14px;line-height:1.6;">
+                                <li>Scalable architecture</li>
+                                <li>Text classification</li>
+                                <li>Big Data integration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 data-bg="EXPERTISE"><span>Capabilities</span>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item"><i class="bi bi-cpu"></i>
+                    <h6>Machine Learning</h6><small style="color:var(--muted)">Supervised & Unsupervised Models</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-chat-dots"></i>
+                    <h6>NLP</h6><small style="color:var(--muted)">Text Processing & Sentiment</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-diagram-3"></i>
+                    <h6>Hadoop Ecosystem</h6><small style="color:var(--muted)">HDFS, MapReduce</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-diagram-3-fill"></i>
+                    <h6>Spark</h6><small style="color:var(--muted)">Distributed Processing</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-database"></i>
+                    <h6>SQL</h6><small style="color:var(--muted)">Data Modeling & Queries</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-code-slash"></i>
+                    <h6>Python</h6><small style="color:var(--muted)">Pandas, NumPy</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-cloud"></i>
+                    <h6>Model Deployment</h6><small style="color:var(--muted)">Streamlit & APIs</small>
+                </div>
+                <div class="skill-item"><i class="bi bi-git"></i>
+                    <h6>Version Control</h6><small style="color:var(--muted)">Git & GitHub</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 data-bg="CAREER"><span>Background</span>Experience</h2>
+            <div class="exp-card">
+                <h5>Software Engineer Intern — Programmics Technology</h5>
+                <span>Jun 2023 – Jan 2024 • Raipur, India</span>
+                <ul>
+                    <li>Developed AI-driven features using Python and ML.</li>
+                    <li>Implemented NLP for multilingual datasets.</li>
+                    <li>Built structured/unstructured data pipelines.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="coffee" class="section">
+        <div class="container">
+            <h2 data-bg="CONNECT"><span>Support</span>Buy Me a Coffee ☕</h2>
+            <div class="coffee-split">
+                <div>
+                    <h3>Let’s Build Something Meaningful.</h3>
+                    <p>I build intelligent AI systems and scalable data pipelines that transform raw information into
+                        measurable impact.</p>
+                    <p>Whether it's collaboration, research, or innovative product ideas — your support enables deeper
+                        exploration and open experimentation.</p>
+                    <div style="margin-top:20px;font-weight:600;color:var(--highlight);">Fuel curiosity. Support
+                        innovation. ☕</div>
+                </div>
+                <div>
+                    <form class="coffee-form" id="coffeeForm">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                        <input type="email" id="email" placeholder="Your Email" required>
+                        <textarea rows="4" id="message" placeholder="Your Message" required></textarea>
+                        <button type="submit" class="coffee-btn">Fuel the Ideas</button>
+                        <div class="success-msg" id="successMsg">Message sent successfully! ☕</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>© 2026 Neha Babhare</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init("YOUR_PUBLIC_KEY");
+
+        const roles = ["AI Engineer", "Data Engineer"];
+        const typingEl = document.getElementById("typing-role");
+        let roleIndex = 0, charIndex = 0, isDeleting = false;
+        function type() {
+            const current = roles[roleIndex];
+            if (!isDeleting) {
+                typingEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === current.length) { setTimeout(() => isDeleting = true, 1000) }
+            } else {
+                typingEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length }
+            }
+            setTimeout(type, isDeleting ? 60 : 100);
+        }
+        type();
+
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+        sections.forEach(sec => observer.observe(sec));
+
+        const scrollContainer = document.getElementById('projectScroll');
+        scrollContainer.innerHTML += scrollContainer.innerHTML;
+        let speed = 0.6, paused = false;
+        function autoScroll() {
+            if (!paused) {
+                scrollContainer.scrollLeft += speed;
+                if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+                    scrollContainer.scrollLeft = 0;
+                }
+            }
+            requestAnimationFrame(autoScroll);
+        }
+        autoScroll();
+        scrollContainer.addEventListener('mouseenter', () => paused = true);
+        scrollContainer.addEventListener('mouseleave', () => paused = false);
+
+        // Single EmailJS Submission Logic (Fixed Duplicate Declaration Issue)
+        const emailForm = document.getElementById('coffeeForm');
+        const successMessage = document.getElementById('successMsg');
+
+        emailForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            }).then(function () {
+                successMessage.style.display = 'block';
+                emailForm.reset();
+                setTimeout(() => { successMessage.style.display = 'none'; }, 3000);
+            }).catch(function () {
+                alert("Something went wrong. Please check your EmailJS keys.");
+            });
+        });
+    </script>
+
+</body>
+
+</html>
